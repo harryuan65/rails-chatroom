@@ -1,5 +1,5 @@
 <h1>
-  <%= @room.name %>
+  <%= link_to(@room.name,edit_room_path(@room)) %>
 </h1>
 
 <div class="row">
@@ -8,12 +8,25 @@
   </div>
 
   <div class="col">
-    <div class="chat" id="chat">
+    <div class="chat" id="chat" data-channel-subscribe="room" data-room-id="<%= @room.id %>">
       <% @room_messages.each do |room_message| %>
-        <div class="room-msg-row">
-          <div style="display:inline-block;"><%= User.find_by_id(room_message.user_id).username %> :</div>
-          <div style="display:inline-block;"><%= room_message.message %></div>
-        </div>
+         <div class="chat-message-container">
+           <div class="row no-gutters">
+                <div class="col-auto text-center">
+                  <img src="<%= room_message.user.gravatar_url%>" class="avatar" alt="" data-role="user-avatar">
+                </div>
+
+                <div class="col">
+                  <div class="message-content">
+                    <p class="mb-1" data-role="message-text"><%= User.find_by_id(room_message.user_id).username %> : <%= room_message.message %></p>
+
+                    <div class="text-right">
+                      <small data-role="message-date"><%= room_message.created_at %></small>
+                    </div>
+                  </div>
+                </div>
+           </div>
+         </div>
       <% end %>
     </div>
 
@@ -32,5 +45,25 @@
 
       <%= form.input :room_id, as: :hidden %>
     <% end %>
+  </div>
+</div>
+
+<div class="d-none" data-role="message-template">
+  <div class="chat-message-container">
+    <div class="row no-gutters">
+      <div class="col-auto text-center">
+        <img src="" class="avatar" alt="" data-role="user-avatar">
+      </div>
+
+      <div class="col">
+        <div class="message-content">
+          <p class="mb-1" data-role="message-text"></p>
+
+          <div class="text-right">
+            <small data-role="message-date"></small>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
