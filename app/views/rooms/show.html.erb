@@ -1,0 +1,36 @@
+<h1>
+  <%= @room.name %>
+</h1>
+
+<div class="row">
+  <div class="col-12 col-md-3">
+    <%= render partial: 'rooms' %>
+  </div>
+
+  <div class="col">
+    <div class="chat" id="chat">
+      <% @room_messages.each do |room_message| %>
+        <div class="room-msg-row">
+          <div style="display:inline-block;"><%= User.find_by_id(room_message.user_id).username %> :</div>
+          <div style="display:inline-block;"><%= room_message.message %></div>
+        </div>
+      <% end %>
+    </div>
+
+    <%= simple_form_for @room_message, html:{id:"form-send-msg"} do |form| %>
+      <div class="input-group mb-3">
+        <%= form.input :message, as: :string,
+                                 wrapper: false,
+                                 label: false,
+                                 input_html: {
+                                   class: 'chat-input',id:"input-msg"
+                                 } %>
+        <div class="input-group-append">
+          <%= form.submit "Send", class: 'btn btn-primary chat-input',data:{disable_with: false} %>
+        </div>
+      </div>
+
+      <%= form.input :room_id, as: :hidden %>
+    <% end %>
+  </div>
+</div>
