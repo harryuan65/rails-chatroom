@@ -1,0 +1,10 @@
+pipeline:
+  backend:
+    image: alpine:3.7
+    commands:
+      - echo "backend testing"
+ 
+  frontend:
+    image: alpine:3.7
+    commands:
+      - echo "frontend testing"

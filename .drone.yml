@@ -1,8 +1,27 @@
 kind: pipeline
-type: docker
-name: default
+name: chatroom_drone
+
 steps:
-- name: greeting
+- name: stage
   image: alpine:3.7
   commands:
-  - echo hello world
+  - echo "stage"
+  when:
+    event: [ promote ]
+    target: [ staging ]
+
+- name: production
+  image: alpine:3.7
+  commands:
+  - echo "production"
+  when:
+    event: [ promote ]
+    target: [ asdfgsdg ]
+
+- name: testing
+  image: alpine:3.7
+  commands:
+  - echo "testing"
+  when:
+    event: [ promote ]
+    target: [ production ]
