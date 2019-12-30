@@ -16,7 +16,7 @@ steps:
   - echo "production"
   when:
     event: [ promote ]
-    target: [ asdfgsdg ]
+    target: [ production ]
 
 - name: testing
   image: alpine:3.7
